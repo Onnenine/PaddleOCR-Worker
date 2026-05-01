@@ -1,0 +1,33 @@
+name: PaddleOCR-Service
+
+on:
+  # Cho phép bạn bấm nút chạy bằng tay trên web GitHub để test
+  workflow_dispatch:
+    inputs:
+      img_url:
+        description: 'Link ảnh hoặc tên file ảnh để test OCR'
+        required: true
+        default: 'test.jpg'
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Cài đặt Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # Dùng cache để các lần sau chạy cực nhanh
+
+      - name: Cài đặt thư viện
+        run: |
+          pip install -r requirements.txt
+
+      - name: Chạy thử OCR
+        run: |
+          # Ở đây mình chạy test với input người dùng nhập vào
+          python run_ocr.py ${{ github.event.inputs.img_url }}
