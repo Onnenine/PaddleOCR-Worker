@@ -1,0 +1,4 @@
+paddlepaddle-tiny
+paddleocr
+opencv-python-headless
+requests
